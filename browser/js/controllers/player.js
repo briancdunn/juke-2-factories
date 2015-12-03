@@ -1,18 +1,18 @@
-app.controller('PlayerCtrl', function($scope, $rootScope){
+app.controller('PlayerCtrl', function($scope, $rootScope, PlayerFactory){
 
   // initialize audio player
-  var audio = document.createElement('audio');
-  audio.addEventListener('ended', function () {
-    $scope.next();
-  });
-  audio.addEventListener('timeupdate', function () {
-    $scope.progress = 100 * audio.currentTime / audio.duration;
-    $scope.$digest();
-  });
+  // var audio = document.createElement('audio');
+  // audio.addEventListener('ended', function () {
+  //   $scope.next();
+  // });
+  // audio.addEventListener('timeupdate', function () {
+  //   $scope.progress = 100 * audio.currentTime / audio.duration;
+  //   $scope.$digest();
+  // });
 
   // state variables
-  $scope.currentSong;
-  $scope.playing = false;
+  // $scope.currentSong;
+  // $scope.playing = false;
 
   // main toggle
   $scope.toggle = function (song) {

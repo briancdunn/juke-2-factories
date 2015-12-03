@@ -1,4 +1,4 @@
-app.controller('AlbumCtrl', function($scope, $http, $rootScope) {
+app.controller('AlbumCtrl', function($scope, $http, $rootScope, PlayerFactory) {
 
   // load our initial data
   $http.get('/api/albums/')
@@ -10,7 +10,9 @@ app.controller('AlbumCtrl', function($scope, $http, $rootScope) {
       song.audioUrl = '/api/songs/' + song._id + '.audio';
     });
     $scope.album = album;
-  }).catch(console.error.bind(console));
+  })
+  .catch(console.error.bind(console));
+
 
   // main toggle
   $scope.toggle = function (song) {
