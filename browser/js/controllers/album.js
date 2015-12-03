@@ -1,24 +1,25 @@
 app.controller('AlbumCtrl', function($scope, $http, $rootScope, PlayerFactory) {
 
   // load our initial data
-  $http.get('/api/albums/')
-  .then(res => $http.get('/api/albums/' + res.data[1]._id))
-  .then(res => res.data)
-  .then(album => {
-    album.imageUrl = '/api/albums/' + album._id + '.image';
-    album.songs.forEach(function(song){
-      song.audioUrl = '/api/songs/' + song._id + '.audio';
-    });
-    $scope.album = album;
-  })
-  .catch(console.error.bind(console));
-
-
-  // main toggle
-  $scope.toggle = function (song) {
-    if ($scope.playing) $rootScope.$broadcast('pause');
-    else $rootScope.$broadcast('play', song);
-  }
+//  $http.get('/api/albums/')
+//  .then(res => $http.get('/api/albums/' + res.data[1]._id))
+//  .then(res => res.data)
+//  .then(album => {
+//    album.imageUrl = '/api/albums/' + album._id + '.image';
+//    album.songs.forEach(function(song){
+//      song.audioUrl = '/api/songs/' + song._id + '.audio';
+//    });
+//    $scope.album = album;
+//  })
+//  .catch(console.error.bind(console));
+  $scope.album = PlayerFactory.getAlbum();
+  console.log($scope.album);
+  console.log("hello from albumctrl");
+//  // main toggle
+//  $scope.toggle = function (song) {
+//    if ($scope.playing) $rootScope.$broadcast('pause');
+//    else $rootScope.$broadcast('play', song);
+//  }
 
   // incoming events (from Player, toggle, or skip)
   $scope.$on('pause', pause);
@@ -28,11 +29,10 @@ app.controller('AlbumCtrl', function($scope, $http, $rootScope, PlayerFactory) {
 
   // functionality
   function pause () {
-    $scope.playing = false;
+    PlayerFactory.pause();
   }
-  function play (event, song){
-    $scope.playing = true;
-    $scope.currentSong = song;
+  function play (song){
+    PlayerFactory.playing(song);
   };
 
   // a "true" modulo that wraps negative to the top of the range
