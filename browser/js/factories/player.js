@@ -4,20 +4,6 @@ app.factory('PlayerFactory',function($q, $http) {
   var playing = false;
   var album;
 
-  $http.get('/api/albums/')
-  .then(res => $http.get('/api/albums/' + res.data[1]._id))
-  .then(res => res.data)
-  .then(anAlbum => {
-    console.log("anAlbum : ", anAlbum);
-    anAlbum.imageUrl = '/api/albums/' + anAlbum._id + '.image';
-    anAlbum.songs.forEach(function(song){
-      song.audioUrl = '/api/songs/' + song._id + '.audio';
-    });
-    album = anAlbum;
-    console.log("album within promise: ", album);
-  })
-  .catch(console.error.bind(console));
-  
   audio.addEventListener('ended', function () {
     next();
   });
@@ -38,8 +24,6 @@ app.factory('PlayerFactory',function($q, $http) {
 
   return {
     getAlbum: function(){
-      console.log("getAlbum: ", album);
-      return album;
     },
     start: function(song, songs) {
       // console.log('ADSLKFJALS;KFJASDLKFJALK;SJ');
